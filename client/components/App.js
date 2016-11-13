@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/actionCreators';
 import Main from './Main';
-
+console.log('actionCreators', actionCreators)
 function mapStateToProps(state) {
   return {
     competitions: state.competitions,

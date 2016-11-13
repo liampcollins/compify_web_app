@@ -10,7 +10,7 @@ function competitions(state = [], action) {
       ]
       break;
     case 'LOAD_COMPS_SUCCESS':
-      return [action.comps]
+      return action.comps
       break;
     default:
       return state;
