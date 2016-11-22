@@ -1,7 +1,6 @@
 function competitions(state = [], action) {
   switch (action.type) {
     case 'ADD_COMPETITION':
-    console.log('ACTION: ', action)
       return [...state, action.comp];
     case 'DELETE_COMPETITION':
       return [

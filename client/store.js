@@ -6,14 +6,14 @@ import { browserHistory } from 'react-router';
 // import the route reducer
 import rootReducer from './reducers/index';
 
-import competitions from './data/competitions';
-import playlists from './data/playlists';
+// import competitions from './data/competitions';
+// import playlists from './data/playlists';
 import {loadComps} from './actions/actionCreators';
 var thunk = require('redux-thunk').default
 // create object for default data
 const defaultState = {
-  competitions,
-  playlists
+  playlists: [],
+  competitions: []
 };
 
 const enhancers = compose(
