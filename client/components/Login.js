@@ -1,19 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router';
-import CompInGrid from './competitions/CompInGrid'
+import loginImg from '../images/login.svg';
 
 const Home = React.createClass({
-  logIn() {
-    this.props.userLogIn();
-  },
-  signUp() {
-    this.props.userSignUp();
-  },
   render() {
     return (
       <div className="home">
-        <h2>Welcome to Compify, log in or sign up to continue</h2>
-        <a href="/login">LOGIN</a>
+        <h2 className="grid-title">Welcome to Compify</h2>
+        <a href="/login"><img src={loginImg} alt='logo' className="spotify-image"/></a>
       </div>
     )
   }

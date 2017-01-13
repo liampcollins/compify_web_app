@@ -27,7 +27,7 @@ module.exports = {
     // images
     {
       // test: /\.jpg$/,
-      test: /\.(woff|png|jpg|gif)$/,
+      test: /\.(woff|png|jpg|svg|gif)$/,
       include: path.join(__dirname, 'client'),
       loader: "url-loader?limit=10000"
     },
