@@ -23,12 +23,9 @@ export function getMyInfo() {
   return (dispatch) => {
     dispatch({ type: SPOTIFY_ME_BEGIN});
     return spotifyApi.getMe().then((data) => {
-      // then upsert the user
-      return usersApi.upsertUser(data).then((user) => {
-        console.log('the user', user)
-      })
+      return usersApi.upsertUser(data);
     }).then((user) => {
-      dispatch({ type: SPOTIFY_ME_SUCCESS, data });
+      dispatch({ type: SPOTIFY_ME_SUCCESS, data: user.data });
     }).catch((e) => {
       dispatch({ type: SPOTIFY_ME_FAILURE, error: e });
     });

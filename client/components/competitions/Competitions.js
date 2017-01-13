@@ -19,8 +19,7 @@ const Competitions = React.createClass({
   render() {
     const { accessToken, refreshToken, user } = this.props;
     const { display_name, images, id, email, external_urls, href, country, product } = user.data;
-    const imageUrl = images[0] ? images[0].url : '';
-
+    // const imageUrl = images[0] ? images[0].url : '';
     if (user.loading) {
       return <h2>Loading...</h2>;
     }

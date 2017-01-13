@@ -30,7 +30,7 @@ function user(state = initialState, action) {
     case SPOTIFY_ME_BEGIN:
       return Object.assign({}, state, { loading: true });
     case SPOTIFY_ME_SUCCESS:
-    return Object.assign({}, state, { loading: false }, { data: Object.assign({}, action.data)});
+      return Object.assign({}, state, { loading: false }, { data: Object.assign({}, action.data)});
     // Add failure state
     case SPOTIFY_ME_FAILURE:
       return state;
