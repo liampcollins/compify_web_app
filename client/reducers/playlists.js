@@ -8,9 +8,9 @@ function playlists(state = [], action) {
         ...state.slice(action.i + 1)
       ]
       break;
-    case 'LOAD_PLAYLISTS_SUCCESS':
-      return action.playlists
-      break;
+    // case 'LOAD_PLAYLISTS_SUCCESS':
+    //   return action.playlists
+    //   break;
     default:
       return state;
   }

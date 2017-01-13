@@ -1,0 +1,71 @@
+.competitions
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('../images/recordplayer.jpg')
+  background-size: cover
+  display flex
+  flex-wrap wrap
+  // max-width 1200px
+  width 100%
+  height: 100vh
+  margin 0 auto
+  // h2
+  //   color: #fff
+  //   font-size: 50px
+  //   width 100%
+  //   text-align center
+  //   height: 100px
+  //   padding-top: 50px
+  a
+    width 33.33%
+  span
+    position absolute
+    left 95%
+    top 5px
+    font-size 15px
+    font-weight bold
+    &:hover
+      color #fff
+  .competitions-grid
+    display: flex
+    align-items: center
+    width: 100%
+
+// COMPETITION IN GRID
+.competition-in-grid, .playlist-in-grid
+  max-width 25%
+  flex-grow 1
+  flex-shrink 0
+  margin 0 20px 20px 20px
+  padding: 20px
+  border 1px solid lightgray
+  box-shadow 0 0 0 5px rgba(0,0,0,0.03);
+  background: rgba(0,0,0,0.5)
+  text-align: center
+  color: #fff
+  &:hover
+    background: rgba(0,0,0,0.7)
+  a
+    display: inline-block
+    min-width: 100%
+    min-height: 100%
+    div
+      font-size: 20px
+      color #fff
+      line-height: 2
+
+// COMPETITION PAGE
+.comp
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)), url(/static/b231e8bb9acb1f0b99997972b86afaf3.jpg)
+  background-size: cover
+  display: flex
+  flex-wrap: wrap
+  width: 100%
+  height: 100vh
+  margin: 0 auto
+  div
+    width 50%
+    display inline-block
+    vertical-align top
+    font-size 50px
+  .comp-name
+    padding 200px 150px 100px 150px
+    text-align center

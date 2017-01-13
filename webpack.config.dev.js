@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-
+// require('url-loader?limit=10000!./file.png');
 module.exports = {
   devtool: 'source-map',
   entry: [
@@ -23,6 +23,13 @@ module.exports = {
       test: /\.js$/,
       loaders: ['babel'],
       include: path.join(__dirname, 'client')
+    },
+    // images
+    {
+      // test: /\.jpg$/,
+      test: /\.(woff|png|jpg|gif)$/,
+      include: path.join(__dirname, 'client'),
+      loader: "url-loader?limit=10000"
     },
     // CSS
     {

@@ -1,12 +1,12 @@
 import competitionsApi from '../api/competitions';
 import playlistsApi from '../api/playlists';
 
-export function loadCompsSuccess(comps) {
-  return {
-    type: 'LOAD_COMPS_SUCCESS',
-    comps
-  };
-}
+// export function loadCompsSuccess(comps) {
+//   return {
+//     type: 'LOAD_COMPS_SUCCESS',
+//     comps
+//   };
+// }
 
 export function loadPlaylistsSuccess(playlists) {
   return {
@@ -15,15 +15,15 @@ export function loadPlaylistsSuccess(playlists) {
   };
 }
 
-export function loadComps() {
-  return function(dispatch) {
-    return competitionsApi.getAllComps().then((comps) => {
-      dispatch(loadCompsSuccess(comps.data));
-    }).catch((error) => {
-      throw(error);
-    });
-  };
-}
+// export function loadComps() {
+//   return function(dispatch) {
+//     return competitionsApi.getAllComps().then((comps) => {
+//       dispatch(loadCompsSuccess(comps.data));
+//     }).catch((error) => {
+//       throw(error);
+//     });
+//   };
+// }
 
 export function loadCompPlaylists(compId) {
   return function(dispatch) {

@@ -6,9 +6,6 @@ import { browserHistory } from 'react-router';
 // import the route reducer
 import rootReducer from './reducers/index';
 
-// import competitions from './data/competitions';
-// import playlists from './data/playlists';
-import {loadComps} from './actions/actionCreators';
 var thunk = require('redux-thunk').default
 // create object for default data
 const defaultState = {
@@ -17,11 +14,10 @@ const defaultState = {
 };
 
 const enhancers = compose(
-  window.devToolsExtension ? window.devToolsExtension() : f => f
+  window.devToolsExtension ? window.devToolsExtension() : (f) => f
 );
 
 const store = createStore(rootReducer, defaultState, applyMiddleware(thunk), enhancers);
-store.dispatch(loadComps());
 
 export const history = syncHistoryWithStore(browserHistory, store);
 

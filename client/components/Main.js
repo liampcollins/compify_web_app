@@ -7,11 +7,8 @@ import { Link } from 'react-router';
 const Main = React.createClass({
   render() {
     return (
-      <div>
+      <div className="page-container">
         <Navbar {...this.props}/>
-        <h1>
-        <Link to="/competitions">COMPIFY</Link>
-        </h1>
         {React.cloneElement(this.props.children, this.props)}
       </div>
     )

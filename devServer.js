@@ -1,155 +1,59 @@
 'user strict';
-var path = require('path');
-var express = require('express');
-var webpack = require('webpack');
-var config = require('./webpack.config.dev');
-var querystring = require('querystring');
-var request = require('request'); // "Request" library
+const path = require('path');
+const express = require('express');
+const webpack = require('webpack');
+const config = require('./webpack.config.dev');
+const querystring = require('querystring');
+const Spotify = require('spotify-web-api-node');
+const app = express();
+const compiler = webpack(config);
+const clientId = 'c7603c0f841e4dbbabf1ae1b45a339b7';
+const clientSecret = 'b6185192c0e14664aba51b4e2c3c3bc9';
+const redirectUri = 'http://localhost:7770/callback';
+const stateKey = 'spotify_auth_state';
+const cookieParser = require('cookie-parser');
+const scope = ['user-read-private', 'user-read-email'];
+const generateRandomString = N => (Math.random().toString(36)+Array(N).join('0')).slice(2, N+2);
+const spotifyApi = new Spotify({
+  clientId,
+  clientSecret,
+  redirectUri
+});
 
-var app = express();
-var compiler = webpack(config);
-
-const client_id = '';
-const client_secret = '';
-const redirect_uri = 'http://localhost:7770/callback';
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
+app.use(cookieParser());
 
 app.get('/login', function(req, res) {
-
-console.log('at login', res)
-  // var state = generateRandomString(16);
-  var state = '2343fsefsdfe'
-  // res.cookie(stateKey, state);
-
-  // your application requests authorization
-  var scope = 'user-read-private user-read-email';
-  res.redirect('https://accounts.spotify.com/authorize?' +
-    querystring.stringify({
-      response_type: 'code',
-      client_id,
-      scope,
-      redirect_uri,
-      state
-    }));
+  var state = generateRandomString(16);
+  res.cookie(stateKey, state);
+  res.redirect(spotifyApi.createAuthorizeURL(scope, state));
 });
 
-app.get('/callback', function(req, res) {
-  console.log('REQ:', req.query)
-  var code = req.query.code || null;
-  var state = req.query.state || null;
-  // var storedState = req.cookies ? req.cookies[stateKey] : null;
-
-  // if (state === null || state !== storedState) {
-  if (false) {
-    res.redirect('/#' +
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
+app.get('/callback', (req, res) => {
+  const { code, state } = req.query;
+  const storedState = req.cookies ? req.cookies[stateKey] : null;
+  if (state === null || state !== storedState) {
+    res.redirect('/#/error/state mismatch');
   } else {
-    // res.clearCookie(stateKey);
-    var authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      form: {
-        code,
-        redirect_uri,
-        grant_type: 'authorization_code'
-      },
-      headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-      },
-      json: true
-    };
+    res.clearCookie(stateKey);
+    spotifyApi.authorizationCodeGrant(code).then(data => {
+      const { expires_in, access_token, refresh_token } = data.body;
 
-    request.post(authOptions, function(error, response, body) {
-      console.log('BODY: ', body)
-      if (!error && response.statusCode === 200) {
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+      // Set the access token on the API object to use it in later calls
+      spotifyApi.setAccessToken(access_token);
+      spotifyApi.setRefreshToken(refresh_token);
 
-        var options = {
-          url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-          if (error) {
-            res.redirect('/');
-            // some error notification
-          }
-          // save user if doesn't exist (for now, just ensure userId and username mapping)
-          console.log('body - ', body);
-
-          var userDetails = {
-            url: 'http://localhost:3000/api/users',
-            form: {
-              username: body.id,
-              email: body.email,
-              spotify_token: access_token
-            },
-            json: true
-          };
-
-          request.post(userDetails, function(error, response, body) {
-            if (!error && response.statusCode === 200) {
-            }
-            if (response) {
-              console.log('response', response)
-              res.redirect('/')
-            }
-            if (body) {
-              console.log('body2', body)
-              res.redirect('/')
-            }
-          })
-        });
-
-        // we can also pass the token to the browser to make requests from there
-        res.redirect('/' +
-          querystring.stringify({
-            access_token,
-            refresh_token
-          }));
-      } else {
-        res.redirect('/#' +
-          querystring.stringify({
-            error: 'invalid_token'
-          }));
-      }
+      res.redirect(`/competitions/${access_token}/${refresh_token}`);
+    }).catch((err) => {
+      res.redirect('/#/error/invalid token');
     });
   }
-})
-
-app.get('/refresh_token', function(req, res) {
-
-  // requesting access token from refresh token
-  var refresh_token = req.query.refresh_token;
-  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
-
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });
-    }
-  });
 });
-
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));

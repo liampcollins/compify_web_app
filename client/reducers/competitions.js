@@ -8,9 +8,9 @@ function competitions(state = [], action) {
         ...state.slice(action.i + 1)
       ]
       break;
-    case 'LOAD_COMPS_SUCCESS':
-      return action.comps
-      break;
+    // case 'LOAD_COMPS_SUCCESS':
+    //   return action.comps
+    //   break;
     default:
       return state;
   }

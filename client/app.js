@@ -1,4 +1,3 @@
-// let's go!
 import React from 'react';
 import { render } from 'react-dom';
 
@@ -10,18 +9,19 @@ import App from './components/App';
 import Competitions from './components/competitions/Competitions';
 import Comp from './components/competitions/Comp';
 import NewComp from './components/competitions/NewComp';
-import Home from './components/Home'
 import Login from './components/Login'
 // import react router deps
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import store, { history } from './store';
+
 const router = (
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Home}></IndexRoute>
-        <Route path="/login" component={Login}></Route>
+        <IndexRoute component={Login}></IndexRoute>
+        <Route path="/competitions/:accessToken/:refreshToken" component={Competitions} />
+        <Route path="/error/:errorMsg" component={Error} />
         <Route path="/competitions" component={Competitions}></Route>
         <Route path="/competition/:compId" component={Comp}></Route>
         <Route path="/competitions/new" component={NewComp}></Route>

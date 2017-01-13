@@ -8,13 +8,17 @@ const CompInGrid = React.createClass({
   },
   render() {
     const comp = this.props.comp
+    console.log('COMP', comp)
     return (
-      <Link to={`/competition/${comp.id}`}>
-        <div className="photo-container">
+      <div className="competition-in-grid">
+        <Link to={`/competition/${comp.id}`}>
           <span onClick={this.handleDelete} className="glyphicon glyphicon-envelope">X</span>
-          <img src={comp.image} alt={comp.name} className="grid-photo"/>
-        </div>
-      </Link>
+          <div>{comp.name}</div>
+          <div>{comp.user_id}</div>
+          <div>Submit by {comp.submission_end_date}</div>
+          <div>Vote by: {comp.vote_end_date}</div>
+        </Link>
+      </div>
     )
   }
 })
