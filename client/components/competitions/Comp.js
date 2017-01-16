@@ -5,6 +5,8 @@ import {loadCompPlaylists} from '../../actions/actionCreators';
 
 const Comp = React.createClass({
   render() {
+    const {params} = this.props;
+
     const compId = this.props.params.compId;
     const i = this.props.competitions.findIndex((comp) => comp.id === parseInt(compId));
     const comp = this.props.competitions[i];

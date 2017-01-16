@@ -1,12 +1,12 @@
 import competitionsApi from '../api/competitions';
 import playlistsApi from '../api/playlists';
 
-// export function loadCompsSuccess(comps) {
-//   return {
-//     type: 'LOAD_COMPS_SUCCESS',
-//     comps
-//   };
-// }
+export function loadCompsSuccess(comps) {
+  return {
+    type: 'UPDATE_COMPETITIONS_STATE',
+    comps
+  };
+}
 
 export function loadPlaylistsSuccess(playlists) {
   return {
@@ -15,15 +15,15 @@ export function loadPlaylistsSuccess(playlists) {
   };
 }
 
-// export function loadComps() {
-//   return function(dispatch) {
-//     return competitionsApi.getAllComps().then((comps) => {
-//       dispatch(loadCompsSuccess(comps.data));
-//     }).catch((error) => {
-//       throw(error);
-//     });
-//   };
-// }
+export function loadComps(userId) {
+  return function(dispatch) {
+    return competitionsApi.getAllComps(userId).then((comps) => {
+      dispatch(loadCompsSuccess(comps.data));
+    }).catch((error) => {
+      throw(error);
+    });
+  };
+}
 
 export function loadCompPlaylists(compId) {
   return function(dispatch) {
@@ -35,11 +35,15 @@ export function loadCompPlaylists(compId) {
   };
 }
 
-export function addCompetition (comp) {
-  return {
-    type: 'ADD_COMPETITION',
-    comp
-  }
+export function addCompetition(comp) {
+  return function(dispatch) {
+    // dispatch for loading screen
+    return competitionsApi.addCompetition(comp).then((resp) => {
+      return resp.data;
+    }).catch((error) => {
+      throw(error);
+    });
+  };
 }
 
 export function deleteCompetition (i) {

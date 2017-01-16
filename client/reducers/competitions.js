@@ -1,7 +1,7 @@
 function competitions(state = [], action) {
   switch (action.type) {
-    case 'ADD_COMPETITION':
-      return [...state, action.comp];
+    case 'UPDATE_COMPETITIONS_STATE':
+      return action.comps;
     case 'DELETE_COMPETITION':
       return [
         ...state.slice(0, action.i),

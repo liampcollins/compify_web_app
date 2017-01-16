@@ -8,7 +8,7 @@ class Users {
     	}),
       body: JSON.stringify(spotifyData)
     });
-    return fetch(request).then((response, data) => {
+    return fetch(request).then((response) => {
       return response.json();
     }).catch((error) => {
       console.log('errorx', error)
