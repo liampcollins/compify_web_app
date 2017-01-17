@@ -29,7 +29,7 @@ const Competitions = React.createClass({
       <div className="competitions">
         <h2 className="grid-title">Your competitions</h2>
         <div className="competitions-grid">
-          {competitions.map((comp,i) =>
+          {this.props.competitions.map((comp,i) =>
             <CompInGrid {...this.props} key={i} i={i} comp={comp}/>
           )}
         </div>

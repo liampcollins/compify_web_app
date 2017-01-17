@@ -18,7 +18,7 @@ const NewComp = React.createClass({
       comp.image = '';
       //  ADD FORM VALIDATION, NOTIFICATIONS, LOADING SCREEN
       this.props.addCompetition(comp).then((resp) => {
-        compId = resp.id;
+        compId = resp;
         this.props.loadComps(userId)
       }).then(() => {
         this.refs.competitionForm.reset();
