@@ -6,7 +6,7 @@ const Home = React.createClass({
     return (
       <div className="home">
         <h2 className="grid-title">Welcome to Compify</h2>
-        <a href="/login"><img src={loginImg} alt='logo' className="spotify-image"/></a>
+        <a href="/spotifylogin"><img src={loginImg} alt='logo' className="spotify-image"/></a>
       </div>
     )
   }

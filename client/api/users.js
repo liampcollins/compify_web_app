@@ -1,20 +1,34 @@
-class Users {
-  static upsertUser(spotifyData) {
-    const request = new Request('http://localhost:3000/api/users', {
-    	method: 'POST',
-    	mode: 'cors',
-      headers: new Headers({
-    		'Content-Type': 'application/json'
-    	}),
+const request = require('request');
+const rp = require('request-promise');
+
+const User = {
+  upsertUser: (spotifyData) => {
+    return request({
+      url: 'http://localhost:3000/api/users',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(spotifyData)
+    }, function(error, response, body) {
+      return body.data;
     });
-    return fetch(request).then((response) => {
-      return response.json();
-    }).catch((error) => {
-      console.log('errorx', error)
-      return error;
-    });
+  },
+  getUser: (id) => {
+    return rp.get('http://localhost:3000/api/users/' + id,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        json: true
+      }
+    ).then((resp) => {
+      console.log('RESP', resp)
+      return resp.data;
+    }).catch((err) => {
+      console.log('Error getting user data', err)
+    })
   }
 }
 
-export default Users;
+module.exports = User;

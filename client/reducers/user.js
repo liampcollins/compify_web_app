@@ -1,5 +1,5 @@
 import {
-  SPOTIFY_TOKENS, SPOTIFY_ME_BEGIN, UPDATE_USER_STATE, SPOTIFY_ME_FAILURE
+  SPOTIFY_TOKENS, GET_ME_BEGIN, UPDATE_USER_STATE, SPOTIFY_ME_FAILURE
 } from '../actions/actionCreators';
 
 
@@ -28,9 +28,10 @@ function user(state = initialState, action) {
     case SPOTIFY_TOKENS:
       const {accessToken, refreshToken} = action;
       return Object.assign({}, state, {accessToken, refreshToken});
-    case SPOTIFY_ME_BEGIN:
+    case GET_ME_BEGIN:
       return Object.assign({}, state, { loading: true });
     case UPDATE_USER_STATE:
+    console.log('UPDATE_USER_STATE', action)
       return Object.assign({}, state, { loading: false }, { data: Object.assign({}, action.data)});
     // Add failure state
     case SPOTIFY_ME_FAILURE:

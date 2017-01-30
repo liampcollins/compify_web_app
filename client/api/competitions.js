@@ -10,7 +10,6 @@ class Competitions {
 
 
   static addCompetition(data) {
-    console.log('data - ', data)
     const request = new Request('http://localhost:3000/api/user/' + data.user_id + '/competitions', {
     	method: 'POST',
     	mode: 'cors',

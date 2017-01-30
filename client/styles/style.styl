@@ -1,20 +1,20 @@
-@import '_normalize.styl'
-@import '_typography.styl'
-@import '_animations.styl'
+@import 'vars.styl'
+@import 'navbar.styl'
+@import 'normalize.styl'
 @import '../components/competitions/competitions.styl'
 @import '../components/playlists/playlists.styl'
 @import '../../node_modules/react-datepicker/dist/react-datepicker.css';
 
 body
   background offwhite
-  box-sizing border-box
-  font-family: 'din-condensed-web'
   text-transform: uppercase
 .page-container
   display flex
   flex-direction row
   align-items stretch
   width: 100%
+  > div:nth-child(2)
+    width: 100%
 .home
   width: 100%
   padding: 100px
@@ -22,26 +22,6 @@ body
   background: linear-gradient(rgb(8, 8, 8), rgba(0, 0, 0, 0.78)), url('../images/turntable.jpg')
   .spotify-image
     width: 40%
-.navbar
-  background: url('../images/dark-bg.jpg')
-  height 100vh
-  display flex
-  flex-direction column
-  padding: 80px 20px 20px 20px
-  flex-basis: 15%
-  img
-    margin-bottom: 40px
-  hr
-    width: 90%
-    margin: 15px auto
-  a
-    text-decoration: none
-    text-align: center
-    .new-comp-button
-      color #fff
-      height 100%
-      text-transform: uppercase
-      font-size: 15px
 
 .photo-grid
   display flex
@@ -60,13 +40,12 @@ body
   box-shadow 0 0 0 5px rgba(0,0,0,0.03);
   position relative
 
-// COMMON
-a
-  text-decoration: none
 .grid-title
   color: #fff
   font-size: 50px
   width 100%
+  height: 100vh
   text-align center
   height: 100px
   padding-top: 50px
+  margin-top: 0

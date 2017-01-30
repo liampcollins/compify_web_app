@@ -2,8 +2,6 @@ import React from 'react';
 import Navbar from './Navbar';
 import { Link } from 'react-router';
 
-
-// ADD NAV BAR
 const Main = React.createClass({
   render() {
     return (

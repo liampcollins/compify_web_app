@@ -1,16 +1,11 @@
 function playlists(state = [], action) {
   switch (action.type) {
-    case 'ADD_PLAYLIST':
-      return [...state, action.playlist];
-    case 'DELETE_PLAYLIST':
-      return [
-        ...state.slice(0, action.i),
-        ...state.slice(action.i + 1)
-      ]
+    case 'GET_PLAYLISTS_BEGIN':
+      return state;
       break;
-    // case 'LOAD_PLAYLISTS_SUCCESS':
-    //   return action.playlists
-    //   break;
+    case 'GET_PLAYLISTS_SUCCESS':
+      return action.data.items;
+      break;
     default:
       return state;
   }
