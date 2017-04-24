@@ -1,21 +1,25 @@
 const request = require('request');
 const rp = require('request-promise');
+const Spotify = require('spotify-web-api-js');
+const spotifyApi = new Spotify();
+const config = require('../../config');
+const baseUrl = config.api_url;
+const webBaseUrl = config.web_api_url;
+
+const getPlaylists = ((user) => {
+  return spotifyApi.getUserPlaylists(user).then((data) => {
+    return data;
+  })
+});
 
 const User = {
-  upsertUser: (spotifyData) => {
-    return request({
-      url: 'http://localhost:3000/api/users',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(spotifyData)
-    }, function(error, response, body) {
-      return body.data;
-    });
+  getUserPlaylists: (user) => {
+    return getPlaylists(user).catch((e) => {
+      console.log('error', e)
+    })
   },
-  getUser: (id) => {
-    return rp.get('http://localhost:3000/api/users/' + id,
+  getUserFriends: (user) => {
+    return rp.get(baseUrl + '/users/' + user.id + '/friends',
       {
         headers: {
           'Content-Type': 'application/json'
@@ -23,11 +27,54 @@ const User = {
         json: true
       }
     ).then((resp) => {
-      console.log('RESP', resp)
+      return resp.data;
+    }).catch((err) => {
+      console.log('Error getting user friends', err)
+    })
+  },
+  upsertUser: (spotifyData) => {
+    return rp.post(baseUrl + '/user',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(spotifyData)
+      }
+    ).then((resp) => {
+      return resp;
+    }).catch((err) => {
+      console.log('Error upserting user', err)
+    });
+  },
+  getUser: (id) => {
+    return rp.get(baseUrl + '/users/' + id,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        json: true
+      }
+    ).then((resp) => {
       return resp.data;
     }).catch((err) => {
       console.log('Error getting user data', err)
     })
+  },
+  addFriend: (data) => {
+    return rp.post(baseUrl + '/users/' + data.id + '/friend/new',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({info: data.info})
+      }
+    ).then((resp) => {
+      return {data: JSON.parse(resp)};
+    }).catch((err) => {
+      console.log('Error adding friend', err)
+    });
   }
 }
 

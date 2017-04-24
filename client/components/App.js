@@ -6,6 +6,7 @@ function mapStateToProps(state) {
   return {
     competitions: state.competitions,
     playlists: state.playlists,
+    friends: state.friends,
     user: state.user
   }
 }

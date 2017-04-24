@@ -11,7 +11,8 @@ var thunk = require('redux-thunk').default
 const defaultState = {
   playlists: [],
   competitions: [],
-  user: {}
+  user: {},
+  friends: []
 };
 
 const enhancers = compose(

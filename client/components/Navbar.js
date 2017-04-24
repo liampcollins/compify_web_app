@@ -5,18 +5,18 @@ import logoImg from '../images/logo-white.png';
 const Navbar = React.createClass({
   render() {
     if (this.props.user && this.props.user.data) {
-      const username = this.props.user.data.username;
+      const id = this.props.user.data.id;
       return (
         <div className="navbar">
-          <Link to={'/user/' + username + 'competitions'}>
+          <Link to={'/user/' + id + '/competitions'}>
             <img src={logoImg} alt='logo' className="logo"/>
           </Link>
           <hr/>
-          <Link to="/">
+          <Link to={'/user/' + id + '/competitions'}>
             <div className="new-comp-button">Home</div>
           </Link>
           <hr/>
-          <Link to={'/user/' + username + '/competitions/new'}>
+          <Link to={'/user/' + id + '/competitions/new'}>
             <div className="new-comp-button">Create Competition</div>
           </Link>
           <hr/>
@@ -28,11 +28,7 @@ const Navbar = React.createClass({
       )
     } else {
       return (
-        <div className="navbar">
-          <Link to={'/login'}>
-            <img src={logoImg} alt='logo' className="logo"/>
-          </Link>
-        </div>
+        <div></div>
       )
     }
   }

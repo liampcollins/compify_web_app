@@ -12,7 +12,7 @@ const User = React.createClass({
   },
   render() {
     return (
-      <div>
+      <div className="authenticated">
           {this.props.children}
       </div>
     )

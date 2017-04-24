@@ -18,8 +18,7 @@ const initialState = {
     images: [],
     product: null,
     type: null,
-    uri: null,
-
+    uri: null
   }
 };
 
@@ -31,7 +30,6 @@ function user(state = initialState, action) {
     case GET_ME_BEGIN:
       return Object.assign({}, state, { loading: true });
     case UPDATE_USER_STATE:
-    console.log('UPDATE_USER_STATE', action)
       return Object.assign({}, state, { loading: false }, { data: Object.assign({}, action.data)});
     // Add failure state
     case SPOTIFY_ME_FAILURE:

@@ -1,6 +1,9 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import {
+  addCompetition
+} from '../../actions/actionCreators';
 
 const NewComp = React.createClass({
   handleSubmit(e) {
@@ -8,16 +11,14 @@ const NewComp = React.createClass({
     try {
       const comp = {};
       let compId;
-      const userId = this.props.user.data.id;
       comp.name = this.refs.name.value;
       comp.theme = this.refs.theme.value;
       comp.song_count = parseInt(this.refs.count.value);
       comp.submission_end_date = this.state.entryEndDate.format();
       comp.vote_end_date = this.state.voteEndDate.format();
       comp.user_id = parseInt(userId);
-      comp.image = '';
       //  ADD FORM VALIDATION, NOTIFICATIONS, LOADING SCREEN
-      this.props.addCompetition(comp).then((resp) => {
+      addCompetition(comp).then((resp) => {
         compId = resp;
         this.props.loadComps(userId)
       }).then(() => {
@@ -51,10 +52,10 @@ const NewComp = React.createClass({
   render() {
     return (
       <div className="new-competition">
-        <h2 className="grid-title">Create a new competition</h2>
         <form className="competition-form" ref="competitionForm" onSubmit={this.handleSubmit}>
+          <h2 className="grid-title">Create a new competition</h2>
           <div><input type="text" ref="name" placeholder="Competition Name"/></div>
-          <div><input type="text" ref="count" placeholder="Song Count"/></div>
+          <div><input type="number" ref="count" placeholder="Song Count"/></div>
           <div><input type="text" ref="theme" placeholder="Theme"/></div>
             <div><DatePicker
               selected={this.state.entryEndDate}

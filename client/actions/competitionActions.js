@@ -36,9 +36,17 @@ export function loadCompPlaylists(compId) {
 }
 
 export function addCompetition(comp) {
+  return competitionsApi.addCompetition(comp).then((resp) => {
+    return resp.data;
+  }).catch((error) => {
+    throw(error);
+  });
+}
+
+export function addPlaylistToComp(playlist) {
   return function(dispatch) {
     // dispatch for loading screen
-    return competitionsApi.addCompetition(comp).then((resp) => {
+    return competitionsApi.addPlaylistToComp(playlist).then((resp) => {
       return resp.data;
     }).catch((error) => {
       throw(error);

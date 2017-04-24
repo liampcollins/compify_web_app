@@ -1,7 +1,9 @@
 const SpotifyWebApi = require('spotify-web-api-node');
-const clientId = process.env.spotifyClientId;
-const clientSecret = process.env.spotifyClientSecret;
-const redirectUri = 'http://localhost:7770/callback';
+const config = require('config');
+const clientId = config.client_id;
+const clientSecret = config.client_secret;
+const redirectUri = config.redirect_uri;
+
 const spotifyApi = new SpotifyWebApi({
   clientId,
   clientSecret,
@@ -24,11 +26,9 @@ const setRefreshToken = (refresh_token) => {
   return spotifyApi.setRefreshToken(refresh_token);
 };
 
-
 const getMe = (name, defaultValue) => {
   return spotifyApi.getMe();
 };
-
 
 module.exports = {
   setAccessToken,

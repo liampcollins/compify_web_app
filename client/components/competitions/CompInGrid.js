@@ -11,7 +11,7 @@ const CompInGrid = React.createClass({
     const comp = this.props.comp
     return (
       <div className="competition-in-grid">
-        <Link to={`/competition/${comp.id}`}>
+        <Link to={`/user/${this.props.user.data.username}/competition/${comp.id}`}>
           <span onClick={this.handleDelete} className="glyphicon glyphicon-envelope">X</span>
           <div>{comp.name}</div>
           <div>{comp.user_id}</div>

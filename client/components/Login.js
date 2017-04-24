@@ -1,15 +1,18 @@
 import React from 'react';
 import loginImg from '../images/login.svg';
+import logoImg from '../images/logo-white.png';
 
-const Home = React.createClass({
+const Login = React.createClass({
   render() {
     return (
-      <div className="home">
-        <h2 className="grid-title">Welcome to Compify</h2>
-        <a href="/spotifylogin"><img src={loginImg} alt='logo' className="spotify-image"/></a>
+      <div className="login">
+        <div className="login-container">
+          <div><img src={logoImg} alt='logo' className="logo"/></div>
+          <div><a href="/spotifylogin"><img src={loginImg} alt='logo' className="spotify-image"/></a></div>
+        </div>
       </div>
     )
   }
 })
 
-export default Home;
+export default Login;

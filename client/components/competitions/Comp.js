@@ -1,42 +1,81 @@
 import React from 'react';
 import Playlist from '../playlists/Playlist';
 import PlaylistSelector from '../playlists/PlaylistSelector';
-import store from '../../store';
-import {loadCompPlaylists} from '../../actions/actionCreators';
+import UserSelector from '../users/UserSelector';
+import { connect } from 'react-redux';
+import {
+  getUserPlaylists,
+  getUserFriends
+} from '../../actions/actionCreators';
 
 const Comp = React.createClass({
-  showPlaylists() {
-    this.props.getPlaylists().then(() => {
-    })
+  togglePlaylistSelector() {
+    const {dispatch} = this.props;
+    this.state = this.state || {};
+    this.setState({showUserPlaylistSelector: !this.state.showUserPlaylistSelector});
+    if (!this.state.showUserPlaylistSelector) {
+      dispatch(getUserPlaylists(this.props.user.data.username));
+    }
+  },
+  toggleUserSelector() {
+    this.state = this.state || {};
+    this.setState({showUserSelector: !this.state.showUserSelector});
+  },
+  componentDidMount() {
+    const {params, user, competitions, dispatch} = this.props;
+    dispatch(getUserPlaylists(this.props.user.data));
+    dispatch(getUserFriends(this.props.user.data));
   },
   render() {
-    const {params} = this.props;
+    const {params, user, competitions, dispatch} = this.props;
+    // dispatch(getUserPlaylists(this.props.user.data.username));
+    const compId = params.compId;
+    const i = competitions.findIndex((comp) => comp.id === parseInt(compId));
+    const comp = competitions[i];
+    if (!comp) return <div></div>
+    let showButton = true;
+    let button;
+    if (comp && comp.playlists && comp.playlists.length) {
+      comp.playlists.forEach((playlist) => {
+        if (playlist.user_id === user.data.id) {
+          showButton = false;
+        }
+      })
+    }
 
-    const compId = this.props.params.compId;
-    const i = this.props.competitions.findIndex((comp) => comp.id === parseInt(compId));
-    const comp = this.props.competitions[i];
+    if (showButton) {
+      button = <div>
+        <button onClick={this.togglePlaylistSelector} className="add-playlist-button">+ Add Playlist</button>
+        </div>
+    }
 
+    let compPlaylists;
 
-    let playlists;
-    if (comp.playlists && comp.playlists.length) {
-      playlists = <div className="playlists-grid">
-        {comp.playlists.map((playlist,i) =>
-          <Playlist {...this.props} key={i} i={i} playlist={playlist}/>
-        )}
-        <button className="add-playlist-button">+ Add Playlist</button>
-      </div>
+    let addUserButton = <div>
+      <button onClick={this.toggleUserSelector} className="add-user-button">+ Add Player</button>
+    </div>
+
+    if (comp && comp.playlists && comp.playlists.length) {
+      <PlaylistSelector {...this.props} type={'comp'} key={i} i={i} comp={comp} />
     } else {
-      playlists = <div className="no-playlists">No playlists</div>
+      compPlaylists = <div>
+        <div className="no-playlists">No playlists</div>
+      </div>
     }
     return (
       <div className="comp">
         <h2 className="grid-title">{comp.name}</h2>
-        {playlists}
-        <div className="add-playlist-button"><span onClick={this.showPlaylists}>+Add Playlist</span></div>
-        <PlaylistSelector {...this.props} key={i} i={i} comp={comp} />
+
+        {button}
+        {(!this.state || !this.state.showUserPlaylistSelector) && compPlaylists}
+        {this.state && this.state.showUserPlaylistSelector && <PlaylistSelector {...this.props} type={'user'} key={i+1} i={i} comp={comp} />}
+
+        {addUserButton}
+        { this.state && this.state.showUserSelector && <UserSelector {...this.props} key={i+1} i={i} comp={comp}></UserSelector> }
       </div>
     )
   }
 })
 
-export default Comp;
+
+export default connect((state) => state)(Comp);
