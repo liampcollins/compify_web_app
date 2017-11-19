@@ -26,10 +26,14 @@ const UserSelector = React.createClass({
       </div>
     } else {
       content = <div>
-        {this.props.friends.map((friend,i) =>{
-          let boundFriendClick = this.showFriend.bind(this, friend);
-          return <div key={i} onClick={boundFriendClick}>{friend.username}</div>
-        })}
+        <div>
+          {this.props.friends.map((friend,i) =>{
+            let boundFriendClick = this.showFriend.bind(this, friend);
+            return <div key={i} onClick={boundFriendClick}>{friend.username}</div>
+          })}
+        </div>
+        <button onClick={this.addFriend}>+Add More</button>
+        {this.state && this.state.showFriendForm && <AddFriend {...this.props}></AddFriend>}
       </div>
     }
     return (

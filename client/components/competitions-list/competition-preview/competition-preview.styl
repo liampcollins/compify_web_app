@@ -1,0 +1,29 @@
+.grid-element
+  display: inline-block
+  font-size: 20px
+  line-height: 1
+  width 250px
+  margin 15px
+  border 1px solid darken(spotifygreen, 25%)
+  border-radius: 2px
+  box-shadow 0 0 0 5px rgba(0,0,0,0.03);
+  background: gridbackground
+  text-align: center
+  color: whitetext
+  &:hover
+    background: rgba(0,0,0,0.7)
+    border-color: spotifygreen
+  a
+    display: block
+    padding: 20px
+    hr
+      margin-top: 10px
+    .comp-owner
+      font-size: 18px
+      line-height: 1.5
+    .row
+      font-size: 14px
+      line-height: 1.5
+      .col-md-6
+        &:first-child
+          border-right: solid 1px white

@@ -14,8 +14,11 @@ const getPlaylists = ((user) => {
 
 const User = {
   getUserPlaylists: (user) => {
-    return getPlaylists(user).catch((e) => {
-      console.log('error', e)
+    return getPlaylists(user).then().catch((e) => {
+      console.log('error getting user playlists', e)
+      if (e.status === 401) {
+        // window.location = ('/login');
+      }
     })
   },
   getUserFriends: (user) => {

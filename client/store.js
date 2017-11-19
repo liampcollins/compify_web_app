@@ -12,14 +12,20 @@ const defaultState = {
   playlists: [],
   competitions: [],
   user: {},
-  friends: []
+  friends: [],
+  notifications: []
 };
 
 const enhancers = compose(
-  window.devToolsExtension ? window.devToolsExtension() : (f) => f
+  window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
 );
 
-const store = createStore(rootReducer, defaultState, applyMiddleware(thunk), enhancers);
+const store = createStore(
+  rootReducer,
+  defaultState,
+  applyMiddleware(thunk),
+  enhancers,
+);
 
 export const history = syncHistoryWithStore(browserHistory, store);
 

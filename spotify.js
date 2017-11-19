@@ -1,5 +1,5 @@
 const SpotifyWebApi = require('spotify-web-api-node');
-const config = require('config');
+const config = require('./config');
 const clientId = config.client_id;
 const clientSecret = config.client_secret;
 const redirectUri = config.redirect_uri;

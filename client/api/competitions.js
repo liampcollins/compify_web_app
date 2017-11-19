@@ -3,7 +3,7 @@ const baseUrl = config.api_url;
 
 class Competitions {
   static addCompetition(data) {
-    const request = new Request(baseUrl + '/api/user/' + data.user_id + '/competitions', {
+    const request = new Request(baseUrl + '/user/' + data.user_id + '/competitions', {
     	method: 'POST',
     	mode: 'cors',
       headers: new Headers({
@@ -20,7 +20,7 @@ class Competitions {
   }
 
   static addPlaylistToComp(data) {
-    const request = new Request(baseUrl + '/api/competition/' + data.competition_id + '/playlists', {
+    const request = new Request(baseUrl + '/user/' + data.user_id + '/competitions/' + data.competition_id + '/playlists', {
     	method: 'POST',
     	mode: 'cors',
       headers: new Headers({

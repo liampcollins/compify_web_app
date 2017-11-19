@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  addFriend
-} from '../../actions/actionCreators';
+import { addFriend } from '../../actions/actionCreators';
 
 const AddFriend = React.createClass({
   getInitialState() {
@@ -10,8 +8,8 @@ const AddFriend = React.createClass({
       respMessage: ''
     };
   },
-  handleSubmit() {
-    // e.preventDefault();
+  handleSubmit(e) {
+    e.preventDefault();
     try {
       //  ADD FORM VALIDATION, NOTIFICATIONS, LOADING SCREEN
       addFriend({
@@ -21,32 +19,40 @@ const AddFriend = React.createClass({
         if (!resp.message) return;
         this.refs.friendForm.reset();
         this.setState({
-          respMessage : resp.message
+          respMessage: resp.message
         });
       });
     } catch (e) {
-      // this.setState({
-      //   noUserFound: true
-      // });
-      console.log('Error with Add friend form', e)
-      return;
+      this.setState({
+        noUserFound: true
+      });
     }
   },
   render() {
-    const form = <form className="friend-form" ref="friendForm" onSubmit={this.handleSubmit}>
-              <input type="text" ref="nameOrEmail" placeholder="Add email or username and hit enter"/>
-              <input type="submit" hidden/>
-            </form>
+    const form = (
+      <form
+        className="friend-form"
+        ref="friendForm"
+        onSubmit={this.handleSubmit}
+      >
+        <input
+          type="text"
+          ref="nameOrEmail"
+          placeholder="Add email or username and hit enter"
+        />
+        <input type="submit" hidden />
+      </form>
+    );
     const noUserFound = <div>No user matched your input</div>;
-    const respMessage = <div>{this.state.respMessage}</div>
+    const respMessage = <div>{this.state.respMessage}</div>;
     return (
       <div>
         {form}
         {this.state.noUserFound && noUserFound}
         {this.state.respMessage && respMessage}
       </div>
-    )
+    );
   }
-})
+});
 
 export default AddFriend;
